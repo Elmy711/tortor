@@ -18,12 +18,12 @@ def main():
                 counter += 1
 
                 
-                with open('proxy.txt', 'r') as f:
+                # Init a new Tor session
+with open('proxy.txt', 'r') as f:
     proxies = [line.strip() for line in f if line.strip()]
 proxy = random.choice(proxies)
 session = tor.new_session(proxies={'http': proxy, 'https': proxy})
 print('{}[!]{} New Tor session initialized...'.format(color.BLUE, color.END))
-                }
 
                 
                 session = tor.new_session(proxies=proxies)
