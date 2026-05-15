@@ -37,4 +37,22 @@ def main():
         print('{}{}{}'.format(color.RED, exception, color.END))
     finally:
         end_time = datetime.datetime.now().time().strftime('%H:%M:%S')
-        total_time = (datetime.datetime.strptime(end_time, '%H:%M:%S') - datetime.datetime.strptime(start_time,
+        total_time = datetime.datetime.strptime(end_time, '%H:%M:%S') - datetime.datetime.strptime(start_time, '%H:%M:%S')
+        print('{}[+]{} Time elapsed:\t{}'.format(color.GREEN, color.END, total_time))
+        print('{}[+]{} Number of requests:\t{}'.format(color.GREEN, color.END, counter))
+        print('{}[!]{} Stopping Tor...'.format(color.RED, color.END))
+        tor.stop_tor()
+        print('{}[!]{} Exiting...\n'.format(color.RED, color.END))
+        sys.exit(0)
+
+if __name__ == '__main__':
+    # Processing args from lib.args import *
+    args = parser.parse_args()
+    target = args.target
+    max_attempts = args.max_attempts
+    # Print help and exit when it runs without target arg
+    if not target:
+        parser.print_help(sys.stdout)
+        sys.exit(2)
+    # Run the main execution
+    main()
