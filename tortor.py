@@ -10,24 +10,15 @@ def main():
         while counter < max_attempts:
             tor = Tor()
             if not tor.tor_installed():
-                print u'{}[!]{} Tor is not installed. Exiting...'.format(color.RED, color.END)
+                print('{}[!]{} Tor is not installed. Exiting...'.format(color.RED, color.END))
                 sys.exit(1)
             else:
-                
                 start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
                 counter += 1
-
-                
                 # Init a new Tor session
-with open('proxy.txt', 'r') as f:
-    proxies = [line.strip() for line in f if line.strip()]
-proxy = random.choice(proxies)
-session = tor.new_session(proxies={'http': proxy, 'https': proxy})
-print('{}[!]{} New Tor session initialized...'.format(color.BLUE, color.END))
-
-                
-                session = tor.new_session(proxies=proxies)
-                print u'{}[!]{} New Tor session initialized...'.format(color.BLUE, color.END)
-                print u'\n{}[+]{} Target: {}{}{}'.format(color.PURPLE, color.END, color.PURPLE, target, color.END)
-
-                
+                with open('proxy.txt', 'r') as f:
+                    proxies = [line.strip() for line in f if line.strip()]
+                proxy = random.choice(proxies)
+                session = tor.new_session(proxies={'http': proxy, 'https': proxy})
+                print('{}[!]{} New Tor session initialized...'.format(color.BLUE, color.END))
+                print('\n{}[+]{} Target: {}{}{}'.format(color.PURPLE, color.END, color.PURPLE, target, color.END))
