@@ -1,9 +1,9 @@
 import datetime
 import sys
 import random
-from lib.tor import Tor
-                                                                                             
-                                             ░▒▒▒░                                           
+from lib.tor import To
+
+
 # Definisi warna
 RED = '\033[91m'
 GREEN = '\033[92m'
