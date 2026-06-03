@@ -3,7 +3,9 @@ import sys
 import random
 from lib.tor import Tor
 from lib.args import parser
-
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Definisi warna
 RED = '\033[91m'
 GREEN = '\033[92m'
