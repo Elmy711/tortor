@@ -1,9 +1,8 @@
 import datetime
+import sys
 import random
 from lib.tor import Tor
-import sys
-sys.path.insert(0, '/path/to/lib')
-from tor import Tor
+from lib.args import parser
 
 # Definisi warna
 RED = '\033[91m'
@@ -17,8 +16,6 @@ ORANGE = '\033[38;5;208m'
 PURPLE = '\033[38;5;141m'
 END = '\033[0m'
 
-# Processing args from lib.args
-from lib.args import *
 args = parser.parse_args()
 target = args.target
 max_attempts = args.max_attempts
