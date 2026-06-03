@@ -1,7 +1,9 @@
 import datetime
-import sys
 import random
 from lib.tor import Tor
+import sys
+sys.path.insert(0, '/path/to/lib')
+from tor import Tor
 
 # Definisi warna
 RED = '\033[91m'
